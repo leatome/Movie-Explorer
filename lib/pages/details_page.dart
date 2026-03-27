@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
+import '../models/favorites.dart';
 
 class DetailsPage extends StatelessWidget {
   final Movie movie;
@@ -25,6 +26,22 @@ class DetailsPage extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             Text(movie.title, style: Theme.of(context).textTheme.titleLarge),
+            ValueListenableBuilder<Set<int>>(
+              valueListenable: Favorites.favoriteIds,
+              builder: (context, favs, _) {
+                final isFav = favs.contains(movie.id);
+                return IconButton(
+                  icon: Icon(
+                    isFav ? Icons.favorite : Icons.favorite_border,
+                    color: Colors.redAccent,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    Favorites.toggle(movie);
+                  },
+                );
+              },
+            ),
             const SizedBox(height: 10),
             Text(
               movie.description,

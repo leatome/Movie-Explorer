@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
 import '../pages/details_page.dart';
+import '../models/favorites.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -49,9 +50,31 @@ class MovieCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      movie.title,
-                      style: Theme.of(context).textTheme.titleLarge,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            movie.title,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        ValueListenableBuilder<Set<int>>(
+                          valueListenable: Favorites.favoriteIds,
+                          builder: (context, favs, _) {
+                            final isFav = favs.contains(movie.id);
+                            return IconButton(
+                              icon: Icon(
+                                isFav ? Icons.favorite : Icons.favorite_border,
+                                color: Colors.redAccent,
+                              ),
+                              onPressed: () {
+                                Favorites.toggle(movie);
+                              },
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     Row(
