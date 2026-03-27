@@ -15,6 +15,7 @@ class DetailsPage extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.grey[800],
+        foregroundColor: Colors.white,
       ),
       backgroundColor: Colors.grey[900],
       body: Padding(
