@@ -9,50 +9,26 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    return ThemeData(
-      appBarTheme: AppBarTheme(
-        backgroundColor: Colors.grey[800],
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      inputDecorationTheme: const InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.white54),
-      ),
-      textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
-      scaffoldBackgroundColor: Colors.grey[900],
-      textSelectionTheme: const TextSelectionThemeData(
-        cursorColor: Colors.white,
-      ),
-    );
+    return Theme.of(context);
   }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
-      IconButton(
-        icon: const Icon(Icons.clear, color: Colors.white),
-        onPressed: () {
-          query = "";
-        },
-      ),
+      IconButton(icon: const Icon(Icons.clear), onPressed: () => query = ""),
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.arrow_back, color: Colors.white),
-      onPressed: () {
-        close(context, null);
-      },
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () => close(context, null),
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.isEmpty) {
-      return Container(color: Colors.grey[900]);
-    }
-
     final results = movies
         .where((m) => m.title.toLowerCase().contains(query.toLowerCase()))
         .toList();
@@ -61,7 +37,7 @@ class MovieSearchDelegate extends SearchDelegate {
       return Center(
         child: Text(
           "Aucun film trouvé",
-          style: const TextStyle(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       );
     }
@@ -76,11 +52,6 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    if (query.isEmpty) {
-      // Rien d'affiché tant que l'utilisateur n'a pas commencé à taper
-      return Container(color: Colors.grey[900]);
-    }
-
     final suggestions = movies
         .where((m) => m.title.toLowerCase().contains(query.toLowerCase()))
         .toList();
@@ -89,7 +60,7 @@ class MovieSearchDelegate extends SearchDelegate {
       return Center(
         child: Text(
           "Aucun film trouvé",
-          style: const TextStyle(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       );
     }
@@ -105,7 +76,10 @@ class MovieSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         final movie = suggestions[index];
         return ListTile(
-          title: Text(movie.title, style: const TextStyle(color: Colors.white)),
+          title: Text(
+            movie.title,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           onTap: () {
             query = movie.title;
             showResults(context);

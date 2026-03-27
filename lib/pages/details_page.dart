@@ -9,15 +9,7 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          movie.title,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.grey[800],
-        foregroundColor: Colors.white,
-      ),
-      backgroundColor: Colors.grey[900],
+      appBar: AppBar(title: Text(movie.title)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -31,16 +23,14 @@ class DetailsPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 15),
+            Text(movie.title, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 10),
             Text(
-              movie.title,
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              movie.description,
+              textAlign: TextAlign.justify,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            Text(movie.description, style: TextStyle(color: Colors.white70)),
           ],
         ),
       ),

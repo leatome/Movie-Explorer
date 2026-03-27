@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
-import 'DetailsPage.dart';
+import '../pages/details_page.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -29,7 +29,6 @@ class MovieCard extends StatelessWidget {
         );
       },
       child: Card(
-        color: Colors.grey[800],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         margin: const EdgeInsets.all(10),
         child: Padding(
@@ -52,29 +51,21 @@ class MovieCard extends StatelessWidget {
                   children: [
                     Text(
                       movie.title,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.calendar_today,
-                          color: Colors.grey,
-                          size: 14,
-                        ),
+                        const Icon(Icons.calendar_today, size: 14),
                         Text(
                           " ${movie.year}",
-                          style: const TextStyle(color: Colors.grey),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
                     ),
                     const SizedBox(height: 5),
                     Text(
                       movie.description,
-                      style: const TextStyle(color: Colors.white70),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis, // truc pour les ...
                     ),
@@ -87,7 +78,7 @@ class MovieCard extends StatelessWidget {
                         ),
                         Text(
                           " ${movie.rate.toStringAsFixed(1)}/10",
-                          style: const TextStyle(color: Colors.grey),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
                     ),
