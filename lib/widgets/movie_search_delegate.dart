@@ -52,6 +52,10 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return Container(color: Colors.grey[900]);
+    }
+
     final suggestions = movies
         .where((m) => m.title.toLowerCase().contains(query.toLowerCase()))
         .toList();
