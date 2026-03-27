@@ -3,6 +3,7 @@ import 'package:pedra_lea_movie_explorer/widgets/movie_card.dart';
 import 'models/movie.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'widgets/MovieSearchDelegate.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,6 +46,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<Movie>> futureMovies;
+  List<Movie> movies = [];
 
   @override
   void initState() {
@@ -66,6 +68,18 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.grey[800],
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: MovieSearchDelegate(movies),
+              );
+            },
+          ),
+        ],
+        foregroundColor: Colors.white,
       ),
       backgroundColor: Colors.grey[900],
       body: FutureBuilder<List<Movie>>(
@@ -76,7 +90,7 @@ class _HomePageState extends State<HomePage> {
           } else if (snapshot.hasError) {
             return const Center(child: Text("Erreur de chargement"));
           } else {
-            final movies = snapshot.data!;
+            movies = snapshot.data!;
 
             return ListView.builder(
               itemCount: movies.length,
@@ -87,10 +101,10 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: null,
         child: const Icon(Icons.home),
-      ),
+      ),*/
     );
   }
 }
