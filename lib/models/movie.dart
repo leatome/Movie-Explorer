@@ -1,4 +1,5 @@
 class Movie {
+  final int id;
   final String title;
   final String year;
   final String poster;
@@ -6,6 +7,7 @@ class Movie {
   final double rate;
 
   Movie({
+    required this.id,
     required this.title,
     required this.year,
     required this.poster,
@@ -15,6 +17,7 @@ class Movie {
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
+      id: json['id'],
       title: json['title'] ?? 'Pas de titre',
       year: json['release_date'] ?? 'Année inconnue',
       poster: "https://image.tmdb.org/t/p/w500${json['poster_path']}",
