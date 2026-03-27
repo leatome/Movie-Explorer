@@ -3,9 +3,12 @@ import '../models/movie.dart';
 import '../services/movie_service.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/movie_search_delegate.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'favorites_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final MovieService movieService;
+  const HomePage({super.key, required this.movieService});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,14 +17,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late Future<List<Movie>> futureMovies;
   List<Movie> movies = [];
-  final MovieService movieService = MovieService(
-    apiKey: "d91b587cd1587e471cee8e4c9dd6765b",
-  );
 
   @override
   void initState() {
     super.initState();
-    futureMovies = movieService.fetchMovies();
+    futureMovies = widget.movieService.fetchMovies();
   }
 
   @override
@@ -38,6 +38,17 @@ class _HomePageState extends State<HomePage> {
         ),
         centerTitle: true,
         actions: [
+          IconButton(
+            icon: Icon(Icons.favorite, color: Colors.redAccent),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => FavoritesPage(allMovies: movies),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
